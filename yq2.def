@@ -1,0 +1,21 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%files
+    ./install.sh /home/src/install.sh
+
+%post
+    apt-get -y update && apt-get -y upgrade
+    apt-get -y install git wget libhts-dev python3 python3-pip
+    pip3 install numpy==2.0.0
+    cd /home/src && chmod +x ./install.sh && ./install.sh
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+%environment
+    export PATH=/usr/local/bin:$PATH
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+
+%runscript
+    date
+
